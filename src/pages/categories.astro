@@ -1,0 +1,253 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import MainLayout from "../layouts/MainLayout.astro";
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+	const response = await fetch(
+		`${import.meta.env.VITE_REPO_URL}/categories.json`,
+	);
+	const categories = await response.json();
+	const paths = Object.keys(categories).map((category: string) => ({
+		params: { category },
+	}));
+	return paths;
+}
+
+const response = await fetch(
+	`${import.meta.env.VITE_REPO_URL}/categories.json`,
+);
+const categories = await response.json();
+const categoriesList = Object.keys(categories);
+---
+
+<MainLayout
+	title="Categories"
+	description={`The list of categories on GrantBin Hub.`}
+>
+	<h1>Categories</h1>
+
+	<ul class="categories-list">
+		{
+			categoriesList.map((category: string) => (
+				<li>
+					<a href={`/categories/${category}`}>{category}</a>
+				</li>
+			))
+		}
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+		<li>
+			<a href={`/categories/demo`}>demo</a>
+		</li>
+	</ul>
+</MainLayout>
+
+<style>
+	.categories-list {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 1em;
+	}
+</style>

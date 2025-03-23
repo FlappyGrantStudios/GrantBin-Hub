@@ -1,0 +1,40 @@
+---
+import "../css/global.css";
+import NavBar from "../components/NavBar";
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Site Meta -->
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>
+			{title ? `${title} • GrantBin Hub` : "GrantBin Hub"}
+		</title>
+		<meta
+			name="description"
+			content={description
+				? description
+				: "A large, categorized, manually-reviewed library of various compiled binaries!"}
+		/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Preloads -->
+		<link rel="preload" as="image" href="/logo/large.png" />
+		<!-- Resources -->
+		<link rel="manifest" href="/site.webmanifest" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	</head>
+
+	<body>
+		<main>
+			<NavBar client:visible />
+
+			<div id="wrapper" class="p-[1em]">
+				<slot />
+			</div>
+		</main>
+	</body>
+</html>

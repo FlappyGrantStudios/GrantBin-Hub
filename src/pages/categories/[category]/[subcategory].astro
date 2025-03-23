@@ -1,0 +1,79 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import { JSDOM } from "jsdom";
+
+export interface Item {
+    url: string;
+    name: string;
+}
+
+async function getItems(
+    category: string,
+    subcategory: string,
+): Promise<Item[]> {
+    const response = await fetch(
+        `${import.meta.env.VITE_REPO_URL}/${category}/${subcategory}`,
+    );
+    const responseText = await response.text();
+    const dom = new JSDOM(responseText);
+    const doc = dom.window.document;
+    const links = doc.querySelectorAll("a");
+    const result = Array.from(links).map((link) => {
+        return { url: link.href, name: link.textContent || "" };
+    });
+    result.splice(0, 1);
+    return result;
+}
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+    async function getCategories(): Promise<{ [key: string]: string[] }> {
+        const response = await fetch(
+            `${import.meta.env.VITE_REPO_URL}/categories.json`,
+        );
+        const categories: { [key: string]: string[] } = await response.json();
+        return categories;
+    }
+
+    const categories = await getCategories();
+    const paths = Object.keys(categories).flatMap((category: string) => {
+        return categories[category].map((subcategory: string) => ({
+            params: { category, subcategory },
+        }));
+    });
+    return paths;
+}
+
+const { category, subcategory } = Astro.params as { [key: string]: string };
+
+if (!category || !subcategory) {
+    console.error("Missing category or subcategory in URL parameters.");
+    throw new Error("Missing category or subcategory");
+}
+
+const items: Item[] = await getItems(category, subcategory);
+---
+
+<MainLayout
+    title={`List of ${category} ${subcategory}`}
+    description={`The list of ${category} ${subcategory} on GrantBin Hub.`}
+>
+    <h1>
+        <a href="..">Categories</a> &rarr;
+        <a href=".">{category}</a> &rarr; {subcategory}
+    </h1>
+
+    <ul>
+        {
+            items.map((item: Item) => (
+                <li>
+                    <a
+                        href={`/items/${encodeURIComponent(item.url.replace(/\//g, "-"))}`}
+                    >
+                        {item.name}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</MainLayout>

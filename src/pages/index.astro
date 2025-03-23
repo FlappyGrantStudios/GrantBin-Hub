@@ -1,0 +1,27 @@
+---
+import BinaryBackground from "../components/BinaryBackground";
+import MainLayout from "../layouts/MainLayout.astro";
+---
+
+<MainLayout>
+	<section id="bb" class="text-wrap w-full h-screen filter brightness-[.2]">
+		<BinaryBackground
+			backgroundColor="transparent"
+			foregroundColor="#00ff00"
+			client:visible
+		/>
+	</section>
+
+	<div
+		class="max-w-[585px] top-[50%] left-[40%] translate-[-50%] absolute z-50"
+	>
+		<h1 class="text-4xl font-semibold">
+			It's new, it's <strong>ad-free</strong>, and it <strong
+				>only cares about its users</strong
+			>
+		</h1>
+		<p class="text-[1.25rem]">
+			Try out <strong>GrantBin Hub</strong> (always free, no matter what) to see if it's for you!
+		</p>
+	</div>
+</MainLayout>

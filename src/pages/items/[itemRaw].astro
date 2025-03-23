@@ -1,0 +1,116 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+import { JSDOM } from "jsdom";
+import type { Item } from "../categories/[category]/[subcategory].astro";
+
+interface ItemMeta {
+    title: string;
+    description: string;
+    files: string[];
+}
+
+async function getItemMeta(item: string): Promise<ItemMeta> {
+    const metaUrl = `${import.meta.env.VITE_REPO_URL}/${item.replace(/-/g, "/")}/meta.json`;
+    const response = await fetch(metaUrl);
+    const meta = await response.json();
+    return meta;
+}
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+    async function getItems(
+        category: string,
+        subcategory: string,
+    ): Promise<Item[]> {
+        const url = `${import.meta.env.VITE_REPO_URL}/${category}/${subcategory}`;
+        const response = await fetch(url);
+        const responseText = await response.text();
+        const dom = new JSDOM(responseText);
+        const doc = dom.window.document;
+        const links = doc.querySelectorAll("a");
+        const result = Array.from(links).map((link) => {
+            return { url: link.href, name: link.textContent || "" };
+        });
+        result.splice(0, 1);
+        return result;
+    }
+
+    const categoriesResponse = await fetch(
+        `${import.meta.env.VITE_REPO_URL}/categories.json`,
+    );
+    const categories: { [key: string]: string[] } =
+        await categoriesResponse.json();
+
+    const paths: { params: { itemRaw: string } }[] = [];
+
+    for (const category in categories) {
+        for (const subcategory of categories[category]) {
+            const items = await getItems(category, subcategory);
+
+            for (const item of items) {
+                const base = import.meta.env.VITE_REPO_URL;
+                let relativeItem = item.url;
+
+                if (relativeItem.startsWith(base)) {
+                    relativeItem = relativeItem.slice(base.length);
+                    if (relativeItem.startsWith("/")) {
+                        relativeItem = relativeItem.slice(1);
+                    }
+                }
+
+                paths.push({
+                    params: {
+                        itemRaw: encodeURIComponent(
+                            relativeItem.replace(/\//g, "-"),
+                        ),
+                    },
+                });
+            }
+        }
+    }
+
+    return paths;
+}
+
+const { itemRaw } = Astro.params as { [key: string]: string };
+
+if (!itemRaw) {
+    console.error("Missing item in URL parameters.");
+    throw new Error("Missing item");
+}
+
+const item = decodeURIComponent(itemRaw).replace(/-/g, "/");
+const itemMeta: ItemMeta = await getItemMeta(item);
+---
+
+<MainLayout title={itemMeta.title} description={itemMeta.description}>
+    <h1>
+        <a href="/categories">Categories</a> &rarr;
+        <a href={`/categories/${item.split("/")[1]}`}>{item.split("/")[1]}</a> &rarr;
+        <a href={`/categories/${item.split("/")[1]}/${item.split("/")[2]}`}
+            >{item.split("/")[2]}</a
+        > &rarr; {itemMeta.title}
+    </h1>
+
+    <div>
+        <h2>{itemMeta.title}</h2>
+        <p>{itemMeta.description}</p>
+
+        <ul class="mt-[1em]">
+            <b>Downloads</b>
+
+            {
+                itemMeta.files.map((fileName: string) => (
+                    <li>
+                        <a
+                            href={`${import.meta.env.VITE_REPO_URL}/${item.replace(/-/g, "/")}/${fileName}`}
+                            download={`${itemMeta.title} ${fileName}`}
+                        >
+                            {fileName}
+                        </a>
+                    </li>
+                ))
+            }
+        </ul>
+    </div>
+</MainLayout>

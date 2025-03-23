@@ -1,0 +1,47 @@
+---
+import type { GetStaticPathsResult } from "astro";
+import MainLayout from "../../layouts/MainLayout.astro";
+
+export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+    const response = await fetch(
+        `${import.meta.env.VITE_REPO_URL}/categories.json`,
+    );
+    const categories = await response.json();
+    const paths = Object.keys(categories).map((category: string) => ({
+        params: { category },
+    }));
+    return paths;
+}
+
+const { category } = Astro.params;
+
+if (!category) {
+    console.error("This will shut TypeScript up!");
+    return;
+}
+
+const response = await fetch(
+    `${import.meta.env.VITE_REPO_URL}/categories.json`,
+);
+const categories = await response.json();
+const subcategories = categories[category] || [];
+---
+
+<MainLayout
+    title={`Subcategories of ${category}`}
+    description={`The list of subcategories to ${category} on GrantBin Hub.`}
+>
+    <h1><a href="..">Categories</a> &rightarrow; {category}</h1>
+
+    <ul>
+        {
+            subcategories.map((subcategory: string) => (
+                <li>
+                    <a href={`/categories/${category}/${subcategory}`}>
+                        {subcategory}
+                    </a>
+                </li>
+            ))
+        }
+    </ul>
+</MainLayout>
