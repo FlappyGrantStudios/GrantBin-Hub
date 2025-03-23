@@ -1,0 +1,4 @@
+Allow: /
+Allow: /categories/
+Allow: /items/
+Allow: /logo/
