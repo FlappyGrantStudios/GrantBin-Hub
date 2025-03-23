@@ -1,6 +1,7 @@
 ---
 import "../css/global.css";
 import NavBar from "../components/NavBar";
+import { ClientRouter } from "astro:transitions";
 
 const { title, description } = Astro.props;
 ---
@@ -21,6 +22,8 @@ const { title, description } = Astro.props;
 				: "GrantBin Hub is a service that provides viewing of GrantBin Repositories. The default repository makes GrantBin Hub a website for downloading many kinds of applications/modifications for many platforms and use cases, while manually reviewing each submissions to prevent uploading of harmfull software. "}
 		/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<!-- Astro Stuff -->
+		<ClientRouter />
 		<!-- Preloads -->
 		<link rel="preload" as="image" href="/logo/large.png" />
 		<!-- Resources -->
@@ -30,7 +33,7 @@ const { title, description } = Astro.props;
 
 	<body>
 		<main>
-			<NavBar client:visible />
+			<NavBar client:visible transition:persist />
 
 			<div id="wrapper" class="p-[1em]">
 				<slot />
