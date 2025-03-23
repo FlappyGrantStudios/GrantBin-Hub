@@ -9,6 +9,7 @@ export default function NavBar() {
                 <ul className="flex items-center gap-[10px] font-bold">
                     <li><a href="/">Home</a></li>
                     <li><a href="/categories">Categories</a></li>
+                    <li><a href="/about">About Us</a></li>
                 </ul>
             </nav>
         </>
