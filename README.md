@@ -1,5 +1,5 @@
 # GrantBin Hub
-A large, categorized, manually-reviewed library of various compiled binaries! Currently, the library is small (not many people have ever heard of the site). I plan for GrantBin Hub to have each binary manually-reviewed to prevent viruses. 
+GrantBin Hub is a service that provides viewing of GrantBin Repositories. The default repository makes GrantBin Hub a website for downloading many kinds of applications/modifications for many platforms and use cases, while manually reviewing each submissions to prevent uploading of harmfull software. 
 
 ## Features
 - **Searchability** on most engines such as Google, to prevent the pain of going through many categories and subcategories.
