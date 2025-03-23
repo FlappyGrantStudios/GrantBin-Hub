@@ -20,11 +20,13 @@ async function getItemMeta(item: string): Promise<ItemMeta> {
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
+    const _REPO_URL: string = import.meta.env.VITE_REPO_URL;
+
     async function getItems(
         category: string,
         subcategory: string,
     ): Promise<Item[]> {
-        const url = `${REPO_URL}/${category}/${subcategory}`;
+        const url = `${_REPO_URL}/${category}/${subcategory}`;
         const response = await fetch(url);
         const responseText = await response.text();
         const dom = new JSDOM(responseText);
@@ -37,7 +39,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
         return result;
     }
 
-    const categoriesResponse = await fetch(`${REPO_URL}/categories.json`);
+    const categoriesResponse = await fetch(`${_REPO_URL}/categories.json`);
     const categories: { [key: string]: string[] } =
         await categoriesResponse.json();
 
@@ -48,7 +50,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
             const items = await getItems(category, subcategory);
 
             for (const item of items) {
-                const base = REPO_URL;
+                const base = _REPO_URL;
                 let relativeItem = item.url;
 
                 if (relativeItem.startsWith(base)) {
