@@ -4,6 +4,8 @@ import MainLayout from "../../layouts/MainLayout.astro";
 import { JSDOM } from "jsdom";
 import type { Item } from "../categories/[category]/[subcategory].astro";
 
+const REPO_URL: string = import.meta.env.VITE_REPO_URL;
+
 interface ItemMeta {
     title: string;
     description: string;
@@ -11,7 +13,7 @@ interface ItemMeta {
 }
 
 async function getItemMeta(item: string): Promise<ItemMeta> {
-    const metaUrl = `${import.meta.env.VITE_REPO_URL}/${item.replace(/-/g, "/")}/meta.json`;
+    const metaUrl = `${REPO_URL}/${item.replace(/-/g, "/")}/meta.json`;
     const response = await fetch(metaUrl);
     const meta = await response.json();
     return meta;
@@ -22,7 +24,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
         category: string,
         subcategory: string,
     ): Promise<Item[]> {
-        const url = `${import.meta.env.VITE_REPO_URL}/${category}/${subcategory}`;
+        const url = `${REPO_URL}/${category}/${subcategory}`;
         const response = await fetch(url);
         const responseText = await response.text();
         const dom = new JSDOM(responseText);
@@ -35,9 +37,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
         return result;
     }
 
-    const categoriesResponse = await fetch(
-        `${import.meta.env.VITE_REPO_URL}/categories.json`,
-    );
+    const categoriesResponse = await fetch(`${REPO_URL}/categories.json`);
     const categories: { [key: string]: string[] } =
         await categoriesResponse.json();
 
@@ -48,7 +48,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
             const items = await getItems(category, subcategory);
 
             for (const item of items) {
-                const base = import.meta.env.VITE_REPO_URL;
+                const base = REPO_URL;
                 let relativeItem = item.url;
 
                 if (relativeItem.startsWith(base)) {
@@ -103,7 +103,7 @@ const itemMeta: ItemMeta = await getItemMeta(item);
                 itemMeta.files.map((fileName: string) => (
                     <li>
                         <a
-                            href={`${import.meta.env.VITE_REPO_URL}/${item.replace(/-/g, "/")}/${fileName}`}
+                            href={`${REPO_URL}/${item.replace(/-/g, "/")}/${fileName}`}
                             download={`${itemMeta.title} ${fileName}`}
                         >
                             {fileName}

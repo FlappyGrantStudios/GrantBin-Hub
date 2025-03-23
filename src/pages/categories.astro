@@ -2,10 +2,10 @@
 import type { GetStaticPathsResult } from "astro";
 import MainLayout from "../layouts/MainLayout.astro";
 
+const REPO_URL: string = import.meta.env.VITE_REPO_URL;
+
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-	const response = await fetch(
-		`${import.meta.env.VITE_REPO_URL}/categories.json`,
-	);
+	const response = await fetch(`${REPO_URL}/categories.json`);
 	const categories = await response.json();
 	const paths = Object.keys(categories).map((category: string) => ({
 		params: { category },
@@ -13,9 +13,7 @@ export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	return paths;
 }
 
-const response = await fetch(
-	`${import.meta.env.VITE_REPO_URL}/categories.json`,
-);
+const response = await fetch(`${REPO_URL}/categories.json`);
 const categories = await response.json();
 const categoriesList = Object.keys(categories);
 ---
