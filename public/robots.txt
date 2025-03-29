@@ -2,4 +2,5 @@ Allow: /
 Allow: /categories/
 Allow: /items/
 Allow: /about
+Allow: /reviews
 Allow: /logo/

@@ -10,6 +10,7 @@ export default function NavBar() {
                     <li><a href="/">Home</a></li>
                     <li><a href="/categories">Categories</a></li>
                     <li><a href="/about">About Us</a></li>
+                    <li><a href="/reviews">Reviews</a></li>
                 </ul>
             </nav>
         </>
