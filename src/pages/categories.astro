@@ -1,8 +1,7 @@
 ---
 import type { GetStaticPathsResult } from "astro";
 import MainLayout from "../layouts/MainLayout.astro";
-
-const REPO_URL: string = import.meta.env.VITE_REPO_URL;
+import { REPO_URL } from "../constants";
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
 	const response = await fetch(`${REPO_URL}/categories.json`);

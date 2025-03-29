@@ -1,0 +1,2 @@
+export const REPO_URL = import.meta.env.VITE_REPO_URL
+export const SUBMISSION_LINK = "mailto:gbin@babypowershell.com?subject=GrantBin%20Hub%3A%20Binary%20Submission&body=My%20Display%20Name%3A%20Your%20name%20you%20want%20displayed%20on%20the%20official%20website.%0D%0AMy%20Binary's%20Name%3A%20Your%20binary's%20name(s).%0D%0AMy%20Reasoning%3A%20Your%20reasoning%20on%20why%20this%20binary%20should%20be%20accepted%20on%20GrantBin%20Hub.%0D%0AExtra%20Notes%3A%20If%20you%20have%20any%20extra%20notes..."

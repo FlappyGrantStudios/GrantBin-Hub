@@ -1,9 +1,8 @@
 ---
 import type { GetStaticPathsResult } from "astro";
 import MainLayout from "../../../layouts/MainLayout.astro";
+import { REPO_URL } from "../../../constants";
 import { JSDOM } from "jsdom";
-
-const REPO_URL: string = import.meta.env.VITE_REPO_URL;
 
 export interface Item {
     url: string;
@@ -27,10 +26,8 @@ async function getItems(
 }
 
 export async function getStaticPaths(): Promise<GetStaticPathsResult> {
-    const _REPO_URL: string = import.meta.env.VITE_REPO_URL;
-
     async function getCategories(): Promise<{ [key: string]: string[] }> {
-        const response = await fetch(`${_REPO_URL}/categories.json`);
+        const response = await fetch(`${REPO_URL}/categories.json`);
         const categories: { [key: string]: string[] } = await response.json();
         return categories;
     }

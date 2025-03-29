@@ -1,6 +1,8 @@
 ---
 import "../css/global.css";
 import NavBar from "../components/NavBar";
+import Footer from "../components/Footer";
+// import Links from "../components/Links";
 import { ClientRouter } from "astro:transitions";
 
 const { title, description } = Astro.props;
@@ -38,6 +40,9 @@ const { title, description } = Astro.props;
 			<div id="wrapper" class="p-[1em]" transition:animate="fade">
 				<slot />
 			</div>
+
+			<Footer client:visible transition:persist />
+			<!-- <Links client:visible transition:persist /> -->
 		</main>
 	</body>
 </html>
